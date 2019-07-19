@@ -3,6 +3,7 @@ package com.jhonjimenez.intergrupotestv2
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -29,6 +30,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.dark_mode_menu, menu)
+        return true
+    }
+
     fun setDarkMode(window: Window) {
         if (InterGrupoApp.prefs.getBoolean(Prefs.IS_NIGHT_MODE)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -41,11 +48,11 @@ class LoginActivity : AppCompatActivity() {
 
     fun changeStatusBar(mode: Int, window: Window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.statusBarColor = resources.getColor(R.color.contentBodyColor);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.statusBarColor = resources.getColor(R.color.colorPrimaryVariant)
             //white mode
             if (mode == 1) {
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
     }

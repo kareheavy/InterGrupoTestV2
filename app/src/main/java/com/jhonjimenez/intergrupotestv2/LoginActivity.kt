@@ -1,32 +1,50 @@
 package com.jhonjimenez.intergrupotestv2
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.jhonjimenez.intergrupotestv2.databinding.ActivityLoginBinding
+import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
 
+    lateinit var viewModel: LoginViewModel
+    lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        setDarkMode(window)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)//Asociamos la UI con el binding
+        binding.lifecycleOwner = this//Para que el binding sea conciente de del ciclo de vida
+        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)//Llamamos al viewmodel
+        binding.loginViewModel = viewModel//Asociamos el viewmodel con el binding
 
-        buttonSendOtp.setOnClickListener(){
+        viewModel.username.observe(this, Observer {
 
-            if(!InterGrupoApp.prefs.getBoolean(Prefs.IS_NIGHT_MODE))
+        })
+
+        viewModel.password.observe(this, Observer {
+
+        })
+
+        setDarkMode()
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.elevation = 0F
+
+        buttonSendOtp.setOnClickListener {
+
+            if (!InterGrupoApp.prefs.getBoolean(Prefs.IS_NIGHT_MODE))
                 InterGrupoApp.prefs.setBoolean(Prefs.IS_NIGHT_MODE, true)
             else
                 InterGrupoApp.prefs.setBoolean(Prefs.IS_NIGHT_MODE, false)
 
-            setDarkMode(window)
+            setDarkMode()
         }
     }
 
@@ -36,24 +54,11 @@ class LoginActivity : AppCompatActivity() {
         return true
     }
 
-    fun setDarkMode(window: Window) {
+    fun setDarkMode() {
         if (InterGrupoApp.prefs.getBoolean(Prefs.IS_NIGHT_MODE)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            changeStatusBar(0, window)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            changeStatusBar(1, window)
-        }
-    }
-
-    fun changeStatusBar(mode: Int, window: Window) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.statusBarColor = resources.getColor(R.color.colorPrimaryVariant)
-            //white mode
-            if (mode == 1) {
-//                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
         }
     }
 }

@@ -1,10 +1,10 @@
-package com.jhonjimenez.intergrupotestv2
+package com.jhonjimenez.intergrupotestv2.presentation
 
 import android.app.Application
 
-class InterGrupoApp : Application(){
+class InterGrupoApp : Application() {
 
-    companion object{
+    companion object {
         lateinit var prefs: Prefs
     }
 

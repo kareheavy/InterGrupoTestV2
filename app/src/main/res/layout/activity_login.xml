@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="loginViewModel"
-            type="com.jhonjimenez.intergrupotestv2.LoginViewModel" />
+            type="com.jhonjimenez.intergrupotestv2.presentation.ui.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
-        tools:context="com.jhonjimenez.intergrupotestv2.LoginActivity">
+        tools:context="com.jhonjimenez.intergrupotestv2.presentation.ui.LoginActivity">
 
 
         <LinearLayout
@@ -37,17 +38,25 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_dragonfly" />
+                    app:srcCompat="@drawable/ic_person" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Login App"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:textSize="28sp"
                     android:textStyle="normal" />
 
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressSendingOtp"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:isVisible="@{loginViewModel.isVisible}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,22 +71,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutUname"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Username"
-                        app:errorEnabled="true">
+                        android:hint="Correo electroníco"
+                        app:errorEnabled="true"
+                        app:errorInputLayout="@{loginViewModel.emailError}"
+                        app:startIconDrawable="@drawable/ic_email">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextUname"
-                            android:text="@{loginViewModel.username}"
+                            android:id="@+id/editTextEmail"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:nextFocusDown="@id/editTextPassword"
+                            android:text="@{loginViewModel.email}"
+                            app:isEnabled="@{loginViewModel.isEnabled}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,37 +99,46 @@
                         android:id="@+id/textInputLayoutPassword"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        app:endIconMode="password_toggle"
+                        app:errorInputLayout="@{loginViewModel.passwordError}"
+                        app:startIconDrawable="@drawable/ic_lock">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="Contraseña"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword"
+                            android:singleLine="true"
                             android:text="@{loginViewModel.password}"
-                            android:hint="Password"
-                            android:inputType="number"
-                            android:singleLine="true" />
+                            app:isEnabled="@{loginViewModel.isEnabled}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <CheckBox
+                        android:id="@+id/checkBoxRemenberMe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isChecked="@{loginViewModel.isChecked()}"
+                        android:text="Recordar credenciales"/>
+
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/buttonSendOtp"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:id="@+id/buttonSignIn"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:onClick="@{() -> loginViewModel.doLogin()}"
-                        android:layout_marginTop="40dp"
-                        android:text="Send OTP"
-                        android:textSize="16sp" />
-
-                    <ProgressBar
-                        android:id="@+id/progressSendingOtp"
-                        style="?android:attr/progressBarStyleLarge"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:isVisible="@{loginViewModel.progressbar}"
-                        android:indeterminate="true" />
+                        android:layout_marginTop="20dp"
+                        android:height="56dp"
+                        android:text="Inicio Sesión"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_lock_open"
+                        app:iconGravity="textStart"
+                        app:isEnabled="@{loginViewModel.isEnabled}" />
 
                 </LinearLayout>
 

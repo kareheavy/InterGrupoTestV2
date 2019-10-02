@@ -1,15 +1,21 @@
 package com.jhonjimenez.intergrupotestv2.presentation
 
 import android.app.Application
+import com.jhonjimenez.intergrupotestv2.presentation.di.Module
+
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class InterGrupoApp : Application() {
 
-    companion object {
-        lateinit var prefs: Prefs
-    }
-
     override fun onCreate() {
         super.onCreate()
-        prefs = Prefs(applicationContext)
+
+        startKoin{
+            androidLogger()
+            androidContext(this@InterGrupoApp)
+            modules(listOf(Module.signInModule, Module.networkModule, Module.sharedPreferencesModule))
+        }
     }
 }

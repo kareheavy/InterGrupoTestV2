@@ -2,20 +2,19 @@ package com.jhonjimenez.intergrupotestv2.presentation.ui
 
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
-import com.jhonjimenez.intergrupotestv2.R
 import com.jhonjimenez.intergrupotestv2.databinding.ActivityLoginBinding
-import timber.log.Timber
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
 
-    lateinit var viewModel: LoginViewModel
-    lateinit var viewModelFactory: LoginViewModelFactory
+    // Lazy inject ViewModel
+    private val viewModel  by viewModel<SignInViewModel>()
+//    lateinit var viewModelFactory: LoginViewModelFactory
     lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +34,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
 
-        viewModelFactory = LoginViewModelFactory()
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(LoginViewModel::class.java)//Llamamos al viewmodel
+//        viewModelFactory = LoginViewModelFactory()
+//        viewModel = ViewModelProviders.of(this, viewModelFactory)
+//            .get(SignInViewModel::class.java)//Llamamos al viewmodel
         binding.lifecycleOwner = this//Para que el binding sea conciente de del ciclo de vida
-        binding.loginViewModel = viewModel//Asociamos el viewmodel con el binding
+        binding.signInViewModel = viewModel//Asociamos el viewmodel con el binding
     }
 
     private fun setupClickListener() {

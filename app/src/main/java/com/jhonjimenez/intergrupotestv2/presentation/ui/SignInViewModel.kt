@@ -3,18 +3,14 @@ package com.jhonjimenez.intergrupotestv2.presentation.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.jhonjimenez.intergrupotestv2.domain.entities.Result
 import com.jhonjimenez.intergrupotestv2.domain.entities.SignInRequest
 import com.jhonjimenez.intergrupotestv2.domain.entities.SignInResponse
 import com.jhonjimenez.intergrupotestv2.domain.use_cases.SignInUseCase
-import com.jhonjimenez.intergrupotestv2.presentation.di.Injector
 import kotlinx.coroutines.*
-import retrofit2.HttpException
-import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
-class LoginViewModel(private val signInUseCase: SignInUseCase) : ViewModel(), CoroutineScope {
+class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel(), CoroutineScope {
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -120,10 +116,10 @@ class LoginViewModel(private val signInUseCase: SignInUseCase) : ViewModel(), Co
     }
 }
 
-class LoginViewModelFactory : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        @Suppress("UNCHECKED_CAST")
-        return LoginViewModel(Injector().provideSignInUsesCase()) as T
-    }
-
-}
+//class LoginViewModelFactory : ViewModelProvider.Factory {
+//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//        @Suppress("UNCHECKED_CAST")
+//        return SignInViewModel(Injector().provideSignInUsesCase()) as T
+//    }
+//
+//}

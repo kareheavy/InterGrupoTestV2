@@ -6,25 +6,25 @@ import com.jhonjimenez.intergrupotestv2.domain.entities.SignInRequest
 import com.jhonjimenez.intergrupotestv2.presentation.InterGrupoApp
 import com.jhonjimenez.intergrupotestv2.presentation.Prefs
 
-class SignInLocalSourceImpl : SignInLocalSource {
+class SignInLocalSourceImpl(private val prefs: Prefs) : SignInLocalSource {
 
     override fun saveCredentials(signInRequest: SignInRequest) {
-        InterGrupoApp.prefs.setString(Prefs.EMAIL, signInRequest.email)
-        InterGrupoApp.prefs.setString(Prefs.PASSWORD, signInRequest.password)
-        InterGrupoApp.prefs.setBoolean(Prefs.REMENBER_ME, true)
+        prefs.setString(Prefs.EMAIL, signInRequest.email)
+        prefs.setString(Prefs.PASSWORD, signInRequest.password)
+        prefs.setBoolean(Prefs.REMENBER_ME, true)
     }
 
     override fun getCredentials(): Result<SignInRequest> {
-        val remenberMe = InterGrupoApp.prefs.getBoolean(Prefs.REMENBER_ME)
-        val email = InterGrupoApp.prefs.getString(Prefs.EMAIL)
-        val password = InterGrupoApp.prefs.getString(Prefs.PASSWORD)
+        val remenberMe = prefs.getBoolean(Prefs.REMENBER_ME)
+        val email = prefs.getString(Prefs.EMAIL)
+        val password = prefs.getString(Prefs.PASSWORD)
 
         return if (remenberMe) {
             Result.Success(
                 SignInRequest(email!!, password!!)
             )
         } else {
-            Result.ErrorRepository(Error(0,"Sin credenciales"))
+            Result.ErrorRepository(Error(0, "Sin credenciales"))
         }
     }
 

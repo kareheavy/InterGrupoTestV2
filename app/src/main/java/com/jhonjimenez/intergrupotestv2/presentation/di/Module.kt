@@ -10,7 +10,7 @@ import com.jhonjimenez.intergrupotestv2.domain.use_cases.SignInUseCaseImpl
 import com.jhonjimenez.intergrupotestv2.presentation.Prefs
 import com.jhonjimenez.intergrupotestv2.presentation.ui.SignInViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 

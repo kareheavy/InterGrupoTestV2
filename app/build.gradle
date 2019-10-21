@@ -1,15 +1,16 @@
-apply plugin: 'com.android.application'
+//Usamos las variables del objeto Pluggins
+apply plugin: (Pluggins.androidApplication)
+apply plugin: (Pluggins.kotlinAndroid)
+apply plugin: (Pluggins.kotlinKapt)
+apply plugin: (Pluggins.kotlinAndroidExtensions)
 
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-
+//Usamos las variables del objeto AndroidSdk
 android {
-    compileSdkVersion 29
+    compileSdkVersion(AndroidSdk.compile)
     defaultConfig {
         applicationId "com.jhonjimenez.intergrupotestv2"
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion(AndroidSdk.min)
+        targetSdkVersion(AndroidSdk.target)
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -33,32 +34,30 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //UI
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha08'
-    implementation 'com.android.support:design:29.0.0'
-    implementation 'com.android.support:support-v4:29.0.0'
+    implementation(Libraries.kotlinStdLib)
+    //Android X and UI
+    implementation(Libraries.appCompat)
+    implementation(Libraries.constraintLayout)
+    implementation(Libraries.material)
+    implementation(Libraries.lifecycle)
+    //Android Support
+    implementation(Libraries.design)
+    implementation(Libraries.support)
     //Test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //Logs in console
-    implementation 'com.jakewharton.timber:timber:4.7.1'
-    //Used for viewmodel
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    testImplementation(Libraries.junit)
+    androidTestImplementation(Libraries.runner)
+    androidTestImplementation(Libraries.espresso)
+    testImplementation(Libraries.mockito)
     //coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    implementation(Libraries.coroutines_core)
+    implementation(Libraries.coroutines_android)
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.6.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-    //Parser
-    implementation 'com.google.code.gson:gson:2.8.5'
-    //Di
-    implementation 'org.koin:koin-android-viewmodel:2.0.1'
-
+    implementation(Libraries.retrofit)
+    implementation(Libraries.retrofit_converter)
+    implementation(Libraries.okhttp)
+    implementation(Libraries.okhttp_interceptor)
+    //Koin
+    implementation(Libraries.koin)
+    //Converter
+    implementation(Libraries.gson)
 }
